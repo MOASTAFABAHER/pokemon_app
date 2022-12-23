@@ -27,30 +27,30 @@ class ListOFPokemonScreen extends StatelessWidget {
           listener: (context, state) {},
           builder: (context, state) {
             var cubit = PokemonCubit.get(context);
-            return Padding(
-                padding: const EdgeInsets.all(16),
-                child: state is PokemonGetSucssesState
-                    ? GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200,
-                                childAspectRatio: 0.7,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20),
-                        itemCount: cubit.request?.pokemon?.length,
-                        itemBuilder: (BuildContext ctx, index) {
-                          return PokemonContainer(
-                            type: cubit.request!.pokemon?[index].type,
-                            hight: cubit.request!.pokemon?[index].height,
-                            weight: cubit.request!.pokemon?[index].weight,
-                            name: cubit.request?.pokemon?[index].name,
-                            urlImage: cubit.request?.pokemon?[index].img,
-                          );
-                        })
-                    : Center(
-                        child: CircularProgressIndicator(
-                        color: AppCOlors.krGreeColor,
-                      )));
+            return state is PokemonGetSucssesState
+                ? GridView.builder(
+                    padding: EdgeInsets.all(16),
+                    physics: BouncingScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20),
+                    itemCount: cubit.request?.pokemon?.length,
+                    itemBuilder: (BuildContext ctx, index) {
+                      return PokemonContainer(
+                        type: cubit.request!.pokemon?[index].type,
+                        hight: cubit.request!.pokemon?[index].height,
+                        weight: cubit.request!.pokemon?[index].weight,
+                        name: cubit.request?.pokemon?[index].name,
+                        urlImage: cubit.request?.pokemon?[index].img,
+                      );
+                    })
+                : Center(
+                    child: CircularProgressIndicator(
+                    color: AppCOlors.krGreeColor,
+                  ));
           },
         ),
       ),
